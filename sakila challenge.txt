@@ -1,0 +1,34 @@
+SHOW tables;
+
+SELECT * FROM film;
+SELECT * FROM actor;
+SELECT * FROM film_list;
+SELECT * FROM film_text;
+SELECT * FROM country;
+SELECT * FROM rental;
+
+SELECT first_name,last_name FROM actor;
+SELECT last_name FROM actor WHERE first_name = 'JOHN';
+SELECT first_name,last_name FROM actor WHERE last_name = 'NEESON';
+SELECT actor_id,first_name,last_name FROM actor WHERE actor_id%10 = 0;
+SELECT description FROM film WHERE film_id = 100;
+SELECT title FROM film WHERE rating = 'R';
+SELECT title FROM film WHERE rating != 'R';
+SELECT title,length FROM film ORDER BY length LIMIT 10;
+SELECT title,length FROM film WHERE length = (SELECT MAX(length) FROM film);
+SELECT title FROM film WHERE special_features LIKE '%Deleted Scenes%';
+SELECT last_name FROM actor GROUP BY last_name HAVING COUNT(last_name) = 1 ORDER BY last_name DESC;
+SELECT last_name,COUNT(last_name) FROM actor GROUP BY last_name HAVING COUNT(last_name) > 1 ORDER BY COUNT(last_name) DESC;
+SELECT a.first_name,a.last_name,COUNT(a.actor_id) FROM actor AS a JOIN film_actor AS fa ON fa.actor_id=a.actor_id GROUP BY fa.actor_id ORDER BY COUNT(a.actor_id) DESC LIMIT 1;
+SELECT r.return_date FROM rental AS r JOIN film AS f ON r.inventory_id=f.film_id WHERE f.title='ACADEMY DINOSAUR';
+SELECT AVG(length) FROM film;
+SELECT category, AVG(length) FROM film_list GROUP BY category ORDER BY AVG(length) DESC;
+SELECT title FROM film WHERE description LIKE '%robot%';
+SELECT COUNT(title) FROM film WHERE release_year=2010;
+SELECT title FROM film_list WHERE category = 'Horror';
+SELECT name FROM staff_list WHERE ID = 2;
+SELECT f.title FROM film AS f JOIN film_actor AS fa JOIN actor AS a ON a.actor_id=fa.actor_id AND fa.film_id=f.film_id WHERE a.first_name='FRED' AND a.last_name='COSTNER';
+SELECT COUNT(DISTINCT country) FROM country;
+SELECT name FROM language ORDER BY name DESC;
+SELECT first_name,last_name FROM actor WHERE last_name LIKE '%son' ORDER BY first_name ASC;
+SELECT g.name,COUNT(g.name) FROM category AS g JOIN film_category AS gm ON gm.category_id = g.category_id GROUP BY gm.category_id ORDER BY COUNT(g.name) DESC LIMIT 1;

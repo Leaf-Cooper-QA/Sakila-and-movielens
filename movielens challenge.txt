@@ -1,0 +1,16 @@
+SHOW tables;
+SELECT * from genres;
+SELECT * from genres_movies;
+SELECT * FROM movies;
+SELECT * FROM ratings;
+SELECT * FROM occupations;
+SELECT * FROM users;
+
+SELECT title FROM movies WHERE release_date BETWEEN '1983-01-01' AND '1993-01-01' ORDER BY release_date DESC;
+SELECT m.title,AVG(r.rating) FROM movies AS m JOIN ratings AS r ON  r.movie_id = m.id GROUP BY m.title ORDER BY AVG(r.rating);
+
+SELECT m.title FROM movies AS m JOIN genres AS g JOIN genres_movies AS gm JOIN ratings AS r JOIN users AS u JOIN occupations AS o ON g.id = gm.genre_id AND 
+gm.movie_id = m.id AND m.id = r.movie_id AND r.user_id = u.id AND u.occupation_id = o.id WHERE u.gender='M' AND u.age = 24 AND g.name='Sci-Fi' AND r.rating=5;
+
+SELECT title FROM movies WHERE release_date= (SELECT release_date FROM movies GROUP BY release_date ORDER BY COUNT(release_date) DESC LIMIT 1);
+SELECT g.name,COUNT(m.title) AS '# of films' FROM genres AS g JOIN movies AS m JOIN genres_movies AS gm ON m.id=gm.movie_id AND gm.genre_id=g.id GROUP BY g.name ORDER by COUNT(m.title);
